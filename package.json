@@ -1,0 +1,31 @@
+{
+	"name": "table-extractor",
+	"version": "0.0.1",
+	"description": "Extract tables from PDF using Tabula",
+	"license": "MIT",
+	"repository": "AshikNesin/table-extractor",
+	"author": {
+		"name": "Ashik Nesin",
+		"email": "mail@ashiknesin.com",
+		"url": "https://nesin.io"
+	},
+	"type": "module",
+	"exports": "./index.js",
+	"engines": {
+		"node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"files": [
+		"index.js"
+	],
+	"keywords": [
+		"tabula",
+		"pdf",
+		"extract table"
+	],
+	"dependencies": {},
+	"devDependencies": {
+	}
+}
