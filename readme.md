@@ -1,65 +1,39 @@
 # table-extractor
 
-> Boilerplate to kickstart creating a Node.js module
-
-This is what I use for [my own modules](https://www.npmjs.com/~sindresorhus).
-
-Also check out [`node-cli-boilerplate`](https://github.com/sindresorhus/node-cli-boilerplate).
-
-## Getting started
-
-**Click the "Use this template" button.**
-
-Alternatively, create a new directory and then run:
-
-```
-$ curl -fsSL https://github.com/sindresorhus/node-module-boilerplate/archive/main.tar.gz | tar -xz --strip-components=1
-```
-
-There's also a [Yeoman generator](https://github.com/sindresorhus/generator-nm).
-
----
-
-**Remove everything from here and above**
-
----
-
-# unicorn-fun
-
-> My awesome module
+> Helps you extract data from tables PDF files like bank statements, invoices, etc.
 
 ## Install
 
 ```sh
-npm install unicorn-fun
+npm install table-extractor
 ```
 
 ## Usage
 
 ```js
-import unicornFun from "unicorn-fun";
-
-unicornFun("unicorns");
-//=> 'unicorns & rainbows'
+import tableExtractor from "table-extractor";
+// p → page
+// a → area (top,left,bottom,right i.e. y1,x1,y2,x2)
+tableExtractor("/tmp/bank-statement.pdf", [
+  { p: 1, a: "427.284375,7.999774999999979,679.415625,586.637275" },
+  { p: 2, a: "63.590625,7.999774999999979,607.271875,588.124775" },
+]);
 ```
+
+//=> 'csvString'
 
 ## API
 
-### unicornFun(input, options?)
+### tableExtractor(filePaths, options)
 
-#### input
+#### filePath
 
 Type: `string`
 
-Lorem ipsum.
+Path of the PDF file
 
 #### options
 
-Type: `object`
+Type: `object` | `array`
 
-##### postfix
-
-Type: `string`\
-Default: `rainbows`
-
-Lorem ipsum.
+See the [tabula-java](https://github.com/tabulapdf/tabula-java#usage-examples) options.
