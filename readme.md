@@ -1,4 +1,4 @@
-# node-module-boilerplate
+# table-extractor
 
 > Boilerplate to kickstart creating a Node.js module
 
@@ -37,9 +37,9 @@ npm install unicorn-fun
 ## Usage
 
 ```js
-import unicornFun from 'unicorn-fun';
+import unicornFun from "unicorn-fun";
 
-unicornFun('unicorns');
+unicornFun("unicorns");
 //=> 'unicorns & rainbows'
 ```
 
