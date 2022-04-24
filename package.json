@@ -26,7 +26,6 @@
 		"extract table"
 	],
 	"dependencies": {
-		"current-path": "^3.0.0",
 		"shelljs": "^0.8.5"
 	},
 	"devDependencies": {}

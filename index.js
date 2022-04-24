@@ -20,36 +20,57 @@ export default async function tableExtractor(filePath, options) {
     args.push(options);
   }
 
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     let output = "";
-    const executor = {};
+    const executorPromises = [];
 
     args.forEach(async (item, index) => {
       const argString = Object.keys(item)
         .map((key) => `-${key}=${item[key]}`)
         .join(" ");
 
-      executor[index] = await shelljs.exec(
-        `java -jar ${jarPath} ${argString} ${filePath}`,
-        {
-          async: true,
-          silent: true,
-        }
-      );
+      const jobPromise = new Promise(async (localResolve, reject) => {
+        const cmd = await shelljs.exec(
+          `java -jar ${jarPath} ${argString} "${filePath}"`,
+          {
+            async: true,
+            silent: true,
+          }
+        );
+        let stdOut = "";
 
-      executor[index].stdout.on("data", (chunk) => {
-        output += chunk.toString();
-      });
+        cmd.stdout.on("data", (chunk) => {
+          stdOut += chunk.toString();
+        });
 
-      if (args.length === index + 1) {
-        executor[index].on("exit", async (code) => {
+        cmd.stderr.on("data", (error) => {
+          console.log(error);
+          reject(error);
+        });
+
+        cmd.stderr.on("error", (error) => {
+          console.log(error);
+          reject(error);
+        });
+
+        cmd.on("exit", async (code) => {
           if (code === 0) {
-            resolve(output);
+            localResolve(stdOut);
           } else {
             reject("Something went wrong");
           }
         });
+      });
+      executorPromises.push(jobPromise);
+    });
+
+    const executor = await Promise.allSettled(executorPromises);
+    executor.map((item) => {
+      if (item.status === "fulfilled") {
+        output += item.value;
       }
     });
+
+    resolve(output);
   });
 }
