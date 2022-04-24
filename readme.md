@@ -2,6 +2,10 @@
 
 > Helps you extract data from tables PDF files like bank statements, invoices, etc.
 
+## Dependency
+
+It's a node wrapper for tabula-java. So make sure JVM is installed in your machine.
+
 ## Install
 
 ```sh
